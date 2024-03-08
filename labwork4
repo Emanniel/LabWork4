@@ -1,0 +1,90 @@
+"""
+    Program Purpose: Program to develop a Python program to perform the calculate total, average customer and identify highest sales,above average customer, below average customer
+    For example: The system it show 20 dataset that for identify all the customer average.
+    Programmer: Muhammad Aiman Danial Bin Noor Azimi
+    Date: 8 March 2024
+"""
+
+def total_units_sold(units_sold):
+    return sum(units_sold)
+
+def highest_sales(product_name, units_sold, customer_reviews):
+    max_sales_index = units_sold.index(max(units_sold))
+    return product_name[max_sales_index], units_sold[max_sales_index], customer_reviews[max_sales_index]
+
+def above_average_reviews(product_name, units_sold, customer_reviews):
+    above_avg_flowers = []
+    for i in range(len(product_name)):
+        if customer_reviews[i] > 3:
+            above_avg_flowers.append((product_name[i], units_sold[i], customer_reviews[i]))
+    return above_avg_flowers
+
+def average_review_score(customer_reviews):
+    return sum(customer_reviews) / len(customer_reviews)
+
+def below_average_sales(product_name, units_sold, customer_reviews):
+    avg_sales = sum(units_sold) / len(units_sold)
+    below_avg_flowers = []
+    for i in range(len(product_name)):
+        if units_sold[i] < avg_sales:
+            below_avg_flowers.append({
+                "product_name": product_name[i],
+                "units_sold": units_sold[i],
+                "customer_reviews": customer_reviews[i]
+            })
+    return below_avg_flowers
+
+try:
+    # Sample dataset for 20 flowers
+    product_name = [
+        "Rose", "Tulip", "Sunflower", "Daisy", "Lily",
+        "Orchid", "Carnation", "Daffodil", "Hydrangea", "Peony",
+        "Chrysanthemum", "Lavender", "Cactus", "Magnolia", "Iris",
+        "Jasmine", "Gerbera", "Anemone", "Poppy", "Hibiscus"
+    ]
+    units_sold = [
+        200, 150, 180, 120, 100,
+        90, 210, 160, 140, 170,
+        130, 110, 220, 190, 170,
+        150, 140, 130, 200, 180
+    ]
+    customer_reviews = [
+        4.3, 4.1, 4.5, 4.2, 3.9,
+        4.0, 4.2, 4.3, 4.4, 4.6,
+        4.0, 4.2, 4.3, 4.1, 4.5,
+        4.2, 4.4, 4.3, 4.6, 4.1
+    ]
+
+    # Task 1: Total Units Sold Calculation
+    total_units_sold = total_units_sold(units_sold)
+    print("Total units sold:", total_units_sold)
+
+    # Task 2: Highest Sales Identification
+    highest_sales_name, highest_sales_units, highest_sales_reviews = highest_sales(product_name, units_sold, customer_reviews)
+    print("\nFlower with the highest sales:")
+    print("{:<15} {:<15} {:<15}".format("Name", "Units Sold", "Customer Reviews"))
+    print("{:<15} {:<15} {:<15}".format(highest_sales_name, highest_sales_units, highest_sales_reviews))
+
+    # Task 3: Above-Average Customer Reviews Identification
+    above_avg_reviews = above_average_reviews(product_name, units_sold, customer_reviews)
+    print("\nFlowers with above-average reviews:")
+    print("{:<15} {:<15} {:<15}".format("Name", "Units Sold", "Customer Reviews"))
+    for flower in above_avg_reviews:
+        print("{:<15} {:<15} {:<15}".format(flower[0], flower[1], flower[2]))
+
+    # Task 4: Average Customer Review Score Calculation
+    avg_review_score = average_review_score(customer_reviews)
+    print("\nAverage customer review score:", avg_review_score)
+
+    # Task 5: Below-Average Sales Identification
+    below_avg_sales = below_average_sales(product_name, units_sold, customer_reviews)
+    print("\nFlowers with below-average sales:")
+    print("{:<15} {:<15} {:<15}".format("Name", "Units Sold", "Customer Reviews"))
+    for flower in below_avg_sales:
+        print("{:<15} {:<15} {:<15}".format(flower["product_name"], flower["units_sold"], flower["customer_reviews"]))
+
+except ValueError as e:
+    print("Error:", e)
+except Exception as e:
+    print("An unexpected error occurred:", e)
+
